@@ -8,8 +8,8 @@ const handler = (req: Request) =>
     req,
     router: appRouter,
     createContext: () => createTRPCContext({ headers: req.headers }),
-    onError:
-      process.env.NODE_ENV === "development" ? console.error : console.error,
+    onError: (error) =>
+      process.env.NODE_ENV === "development" ? console.error(error) : console.error(error),
   });
 
 export { handler as GET, handler as POST };

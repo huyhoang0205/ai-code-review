@@ -11,20 +11,18 @@ export const createTRPCContext = async (otps: { headers: Headers }) => {
 };
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
-    transformer: superjson,
-    errorFormatter({shape, error}) {
-        return {
-          ...shape,
-          data: {
-            ...shape.data,
-            zodError:
-              error.cause instanceof ZodError
-                ? flattenError(error.cause)
-                : null,
-          },
-        };
-    }
-})
+  transformer: superjson,
+  errorFormatter({ shape, error }) {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        zodError:
+          error.cause instanceof ZodError ? flattenError(error.cause) : null,
+      },
+    };
+  },
+});
 
 export const createCallerFactory = t.createCallerFactory;
 export const createTRPCRouter = t.router;
